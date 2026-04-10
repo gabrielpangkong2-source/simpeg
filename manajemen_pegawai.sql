@@ -1,94 +1,245 @@
--- ============================================
--- DATABASE: manajemen_pegawai
--- DINAS PENANAMAN MODAL DAN PELAYANAN TERPADU
--- SATU PINTU DAERAH KOTA TOMOHON
--- ============================================
+-- phpMyAdmin SQL Dump
+-- version 5.2.3
+-- https://www.phpmyadmin.net/
+--
+-- Host: localhost:3306
+-- Generation Time: Apr 08, 2026 at 05:57 AM
+-- Server version: 8.0.30
+-- PHP Version: 8.1.10
 
-CREATE DATABASE IF NOT EXISTS `manajemen_pegawai` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `manajemen_pegawai`;
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
 
--- ============================================
--- TABEL: pegawai
--- ============================================
-DROP TABLE IF EXISTS `pegawai`;
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `manajemen_pegawai`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pegawai`
+--
+
 CREATE TABLE `pegawai` (
-  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `nama` VARCHAR(200) NOT NULL,
-  `tempat_lahir` VARCHAR(100) DEFAULT NULL,
-  `tanggal_lahir` DATE DEFAULT NULL,
-  `nip` VARCHAR(30) NOT NULL,
-  `gol_ruang_cpns` VARCHAR(10) DEFAULT NULL,
-  `tmt_cpns` DATE DEFAULT NULL,
-  `pangkat_terakhir` VARCHAR(100) DEFAULT NULL,
-  `jenis_kelamin` ENUM('L','P') NOT NULL DEFAULT 'L',
-  `status_kawin` VARCHAR(20) DEFAULT NULL,
-  `agama` VARCHAR(20) DEFAULT NULL,
-  `tingkat_pendidikan` VARCHAR(10) DEFAULT NULL,
-  `jurusan` VARCHAR(150) DEFAULT NULL,
-  `tahun_lulus` YEAR DEFAULT NULL,
-  `alumni` VARCHAR(100) DEFAULT NULL,
-  `jabatan` VARCHAR(200) DEFAULT NULL,
-  `eselon` VARCHAR(10) DEFAULT NULL,
-  `diklat_penjenjangan` VARCHAR(50) DEFAULT NULL,
-  `instansi_pembayar` VARCHAR(100) DEFAULT NULL,
-  `alamat` TEXT DEFAULT NULL,
-  `no_telp` VARCHAR(20) DEFAULT NULL,
-  `keterangan` TEXT DEFAULT NULL,
-  `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
+  `nama` varchar(200) COLLATE utf8mb4_general_ci NOT NULL,
+  `nip` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
+  `gol_ruang_cpns` varchar(10) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `tmt_cpns` date DEFAULT NULL,
+  `pangkat_terakhir` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `jenis_kelamin` enum('L','P') COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'L',
+  `jabatan` varchar(200) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `eselon` varchar(10) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `diklat_penjenjangan` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `instansi_pembayar` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `keterangan` text COLLATE utf8mb4_general_ci,
+  `role` varchar(256) COLLATE utf8mb4_general_ci NOT NULL,
+  `password` varchar(256) COLLATE utf8mb4_general_ci NOT NULL,
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- ============================================
--- SAMPLE DATA (dari Daftar Nominatif 2026)
--- ============================================
-INSERT INTO `pegawai` (`nama`, `tempat_lahir`, `tanggal_lahir`, `nip`, `gol_ruang_cpns`, `tmt_cpns`, `pangkat_terakhir`, `jenis_kelamin`, `status_kawin`, `agama`, `tingkat_pendidikan`, `jurusan`, `tahun_lulus`, `alumni`, `jabatan`, `eselon`, `diklat_penjenjangan`, `instansi_pembayar`, `alamat`, `no_telp`) VALUES
-('ANNEKE GRJESE MAINDOKA, S.Sos., M.Si', 'KAKAS', '1967-08-27', '19670827 199403 2 006', 'IIb', '1994-03-01', 'Pembina Utama Muda/ IVc', 'P', 'Kawin', 'Kristen', 'S-2', 'IPPW', 2012, 'UNSRAT Manado', 'KEPALA DINAS', 'II', 'PIM II', 'DPMPTSPD', 'Kel. Kakaskasen III Kec. Tomohon Utara', '085256487915'),
+--
+-- Dumping data for table `pegawai`
+--
 
-('FENNY MEIDY SAKUL, SE., MM', 'TOMOHON', '1982-05-07', '19820507 200604 2 022', 'IIIa', NULL, 'Pembina Tkt I / IVb', 'P', 'Kawin', 'Kristen', 'S-2', NULL, NULL, NULL, 'SEKRETARIS DINAS', 'IIIa', NULL, 'DPMPTSPD', 'Kel. Paslaten Dua, Kec. Tomohon Timur', '085396323503'),
+INSERT INTO `pegawai` (`nama`, `nip`, `gol_ruang_cpns`, `tmt_cpns`, `pangkat_terakhir`, `jenis_kelamin`, `jabatan`, `eselon`, `diklat_penjenjangan`, `instansi_pembayar`, `keterangan`, `role`, `password`, `created_at`, `updated_at`) VALUES
+('ANNEKE GRJESE MAINDOKA, S.Sos., M.Si', '196708271994032006', 'IIb', '1994-03-01', 'Pembina Utama Muda/ IVc', 'P', 'KEPALA DINAS', 'II', 'PIM II', 'DPMPTSPD', NULL, '', '', '2026-04-08 11:19:22', '2026-04-08 13:15:20'),
+('MAUREN S. K. RAU, SP., MAP', '196912212006042007', 'IIIa', '2006-04-01', 'Pembina / IVa', 'P', 'KEPALA BIDANG PELAYANAN TERPADU', 'IIIb', 'PIM III', 'DPMPTSPD', NULL, '', '', '2026-04-08 11:19:22', '2026-04-08 13:15:20'),
+('JAMES D. ROMPAS, ST', '197106112006041002', 'IIa', '2006-04-01', 'Penata Tkt I / IIId', 'L', 'Penata Perizinan Ahli Muda', NULL, 'Pra Jabatan', 'DPMPTSPD', NULL, '', '', '2026-04-08 11:19:22', '2026-04-08 13:15:20'),
+('IRENE S. PURUKAN, S.Pt', '197109192003122005', 'IIIa', '2003-12-29', 'Penata Tkt I / IIId', 'P', 'KEPALA BIDANG PROMOSI', 'IIIb', NULL, 'DPMPTSPD', NULL, '', '', '2026-04-08 11:19:22', '2026-04-08 13:15:20'),
+('WULAN ELISABETANI ROEROE, SE., Msi', '197408112002122008', 'IIc', '2002-12-01', 'Pembina/ IVa', 'P', 'KEPALA BIDANG PENGENDALIAN PENANAMAN MODAL', 'IIIb', 'PIM III', 'DPMPTSPD', NULL, '', '', '2026-04-08 11:19:22', '2026-04-08 13:15:20'),
+('REFLI R. H. AROR, SE', '197510242000031002', 'IIa', '2000-03-01', 'Penata Tkt I / IIId', 'L', 'Penata Perizinan Ahli Muda', NULL, 'PIM IV', 'DPMPTSPD', NULL, '', '', '2026-04-08 11:19:22', '2026-04-08 13:15:20'),
+('JUNITA N. PANTOW, S.Kom', '197606222023212006', 'IX', '2023-10-01', '-', 'P', 'Pranata Komputer Ahli Pertama', NULL, NULL, 'DPMPTSPD', NULL, '', '', '2026-04-08 11:19:22', '2026-04-08 13:15:20'),
+('DOLLY M. KAENG, SE.', '197704162010012004', 'IIIa', '2010-01-01', 'Penata Tkt I / IIId', 'P', 'Kasubag Umum Perencanaan Kepegawaian dan Hukum', 'IVa', 'Pra Jabatan', 'DPMPTSPD', NULL, '', '', '2026-04-08 11:19:22', '2026-04-08 13:15:20'),
+('IVANA S. O. RUMAYAR, SS.', '197901102009022004', 'IIIa', '2009-02-01', 'Penata Tkt I / IIId', 'P', 'Analis Kebijakan Ahli Muda', NULL, 'PIM IV', 'DPMPTSPD', NULL, '', '', '2026-04-08 11:19:22', '2026-04-08 13:15:20'),
+('INGGRIT S. W. LANGOY, S.Si.', '198108122011022001', 'IIIa', '2011-02-01', 'Penata Tkt I / IIId', 'P', 'Analis Keuangan Pusat dan Daerah Ahli Muda', NULL, 'Pra Jabatan', 'DPMPTSPD', NULL, '', '', '2026-04-08 11:19:22', '2026-04-08 13:15:20'),
+('FENNY MEIDY SAKUL, SE., MM', '198205072006042022', 'IIIa', NULL, 'Pembina Tkt I / IVb', 'P', 'SEKRETARIS DINAS', 'IIIa', NULL, 'DPMPTSPD', NULL, '', '', '2026-04-08 11:19:22', '2026-04-08 13:15:20'),
+('ANSYE CHRISTINE ENGGELINA RANDANG', '198308242010012006', 'IIa', '2010-01-01', 'Penata/ IIa', 'P', 'Pengadministrasi Perkantoran', NULL, 'Pra Jabatan', 'DPMPTSPD', NULL, '', '', '2026-04-08 11:19:22', '2026-04-08 13:15:20'),
+('VINCENTIA A. MUMPEL, SS', '198406112010012005', 'IIIa', '2010-01-01', 'Penata Tkt I / IIId', 'P', 'Penata Perizinan Ahli Muda', NULL, 'Pra Jabatan', 'DPMPTSPD', NULL, '', '', '2026-04-08 11:19:22', '2026-04-08 13:15:20'),
+('PRICILIA O. LANTANG, SH', '198410022010012002', 'IIIa', '2010-01-01', 'Penata Tkt I / IIId', 'P', 'Penelaah Teknis Kebijakan', NULL, 'Pra Jabatan', 'DPMPTSPD', NULL, '', '', '2026-04-08 11:19:22', '2026-04-08 13:15:20'),
+('NIKITA APRIANTO PALIT, SE', '198504142023211024', 'IX', '2023-10-01', '-', 'P', 'Analis Kebijakan Ahli Pertama', NULL, NULL, 'DPMPTSPD', NULL, '', '', '2026-04-08 11:19:22', '2026-04-08 13:15:20'),
+('DANIEL TOAR SAUT WAGYU, SH', '198609272019031007', 'IIIa', '2019-03-01', 'Penata Muda Tkt I / IIIb', 'L', 'Penelaah Teknis Kebijakan', NULL, 'Latsar CPNS', 'DPMPTSPD', NULL, '', '', '2026-04-08 11:19:22', '2026-04-08 13:15:20'),
+('ARNOLD Y. P. KARUNDENG, S.SI', '198809022019031009', 'IIIa', '2019-03-01', 'Penata Muda Tkt I / IIIb', 'L', 'Penelaah Teknis Kebijakan', NULL, 'Latsar CPNS', 'DPMPTSPD', NULL, '', '', '2026-04-08 11:19:22', '2026-04-08 13:15:20'),
+('NIESYELA M. RONDONUWU, SE', '198903052024212039', 'IX', '2024-03-01', '-', 'P', 'Analis Kebijakan Ahli Pertama', NULL, NULL, 'DPMPTSPD', NULL, '', '', '2026-04-08 11:19:22', '2026-04-08 13:15:20'),
+('GLADYS SULANGI, A.Md', '198908162019032019', 'IIc', '2019-03-01', 'Pengatur Tkt I / IId', 'P', 'Penelaah Teknis Kebijakan', NULL, 'Latsar CPNS', 'DPMPTSPD', NULL, '', '', '2026-04-08 11:19:22', '2026-04-08 13:15:20'),
+('SILVANA ELITA SUMENDAP, SE', '199109152019032010', 'IIc', '2019-03-01', 'Penata Muda / IIIa', 'P', 'Penelaah Teknis Kebijakan', NULL, 'Latsar CPNS', 'DPMPTSPD', NULL, '', '', '2026-04-08 11:19:22', '2026-04-08 13:15:20'),
+('SINTYA CLARA ASSA, SE.', '199206022019032011', 'IIIa', '2019-03-01', 'Penata Muda Tkt I / IIIb', 'P', 'Penelaah Teknis Kebijakan', NULL, 'Latsar CPNS', 'DPMPTSPD', NULL, '', '', '2026-04-08 11:19:22', '2026-04-08 13:15:20'),
+('MELISA MAMESAH, SE., MSA', '199305062019032013', 'IIIa', '2019-03-01', 'Penata Muda / IIIa', 'P', 'Penelaah Teknis Kebijakan (Bendahara)', NULL, 'Latsar CPNS', 'DPMPTSPD', NULL, '', '', '2026-04-08 11:19:22', '2026-04-08 13:15:20'),
+('LUCKY YOSIN BABY RAU, SM', '199409132022032010', 'IIIa', '2022-03-01', 'Penata Muda / IIIa', 'P', 'Penelaah Teknis Kebijakan', NULL, 'Latsar CPNS', 'DPMPTSPD', NULL, '', '', '2026-04-08 11:19:22', '2026-04-08 13:15:20'),
+('OKTAVIA CLAUDIA PUSUNG, SE', '199610072024212042', 'IX', '2024-03-01', '-', 'P', 'PERENCANA AHLI PERTAMA', NULL, NULL, 'DPMPTSP', NULL, '', '', '2026-04-08 11:19:22', '2026-04-08 13:15:20'),
+('KRISTINA CARLEN PANGEMANAN, S.Tr.IP', '200308052025102001', 'IIIa', '2025-10-01', 'Penata Muda / IIIa', 'P', 'Penata Perizinan Ahli Pertama', NULL, NULL, 'DPMPTSPD', NULL, '', '', '2026-04-08 11:19:22', '2026-04-08 13:15:20');
 
-('WULAN ELISABETANI ROEROE, SE., Msi', 'TOMOHON', '1974-08-11', '19740811 200212 2 008', 'IIc', '2002-12-01', 'Pembina/ IVa', 'P', 'Kawin', 'Kristen', 'S-2', 'Pengelola Sumberdaya Pembangunan', 2010, 'UNSRAT Manado', 'KEPALA BIDANG PENGENDALIAN PENANAMAN MODAL', 'IIIb', 'PIM III', 'DPMPTSPD', 'Kel. Lansot Kec. Tomohon Selatan', '081340009575'),
+-- --------------------------------------------------------
 
-('MAUREN S. K. RAU, SP., MAP', 'TOMOHON', '1969-12-21', '19691221 200604 2 007', 'IIIa', '2006-04-01', 'Pembina / IVa', 'P', 'Kawin', 'Kristen', 'S-2', 'Administrasi Publik', 2009, 'UNIMA Tondano', 'KEPALA BIDANG PELAYANAN TERPADU', 'IIIb', 'PIM III', 'DPMPTSPD', 'Kel. Kakaskasen Dua Kec. Tomohon Utara', '082191460059'),
+--
+-- Table structure for table `pegawai_drh`
+--
 
-('IRENE S. PURUKAN, S.Pt', 'TOMOHON', '1971-09-19', '19710919 200312 2 005', 'IIIa', '2003-12-29', 'Penata Tkt I / IIId', 'P', 'Kawin', 'Kristen', 'S-1', 'Ilmu Nutrisi dan Makanan Ternak', 1999, 'UNSRAT Manado', 'KEPALA BIDANG PROMOSI', 'IIIb', NULL, 'DPMPTSPD', 'Kel. Tinoor', NULL),
+CREATE TABLE `pegawai_drh` (
+  `nip` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `tingkat_pendidikan` varchar(10) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `jurusan` varchar(150) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `tahun_lulus` year DEFAULT NULL,
+  `alumni` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `keterangan` text COLLATE utf8mb4_general_ci,
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-('DOLLY M. KAENG, SE.', 'TOMOHON', '1977-04-16', '19770416 201001 2 004', 'IIIa', '2010-01-01', 'Penata Tkt I / IIId', 'P', 'Kawin', 'Kristen', 'S-1', 'Ekonomi Manajemen', 1999, 'STIE Budi Utomo Manado', 'Kasubag Umum Perencanaan Kepegawaian dan Hukum', 'IVa', 'Pra Jabatan', 'DPMPTSPD', 'Kel. Kakaskasen Lingkungan VII, Kec. Tomohon Utara', '081354726433'),
+--
+-- Dumping data for table `pegawai_drh`
+--
 
-('INGGRIT S. W. LANGOY, S.Si.', 'TOMPASO BARU', '1981-08-12', '19810812 201102 2 001', 'IIIa', '2011-02-01', 'Penata Tkt I / IIId', 'P', 'Kawin', 'Kristen', 'S-1', 'Ilmu Komputer', 2005, 'UKRIM Jogjakarta', 'Analis Keuangan Pusat dan Daerah Ahli Muda', NULL, 'Pra Jabatan', 'DPMPTSPD', 'Maumbi Jaga II Kec. Eris Kab. Minahasa', '085240791980'),
+INSERT INTO `pegawai_drh` (`nip`, `tingkat_pendidikan`, `jurusan`, `tahun_lulus`, `alumni`, `keterangan`, `created_at`, `updated_at`) VALUES
+('196708271994032006', 'S-2', 'IPPW', '2012', 'UNSRAT Manado', NULL, '2026-04-08 11:19:22', '2026-04-08 13:15:44'),
+('196912212006042007', 'S-2', 'Administrasi Publik', '2009', 'UNIMA Tondano', NULL, '2026-04-08 11:19:22', '2026-04-08 13:15:44'),
+('197106112006041002', 'S-1', 'Teknik Industri', '2009', 'ITM Tomohon', NULL, '2026-04-08 11:19:22', '2026-04-08 13:15:44'),
+('197109192003122005', 'S-1', 'Ilmu Nutrisi dan Makanan Ternak', '1999', 'UNSRAT Manado', NULL, '2026-04-08 11:19:22', '2026-04-08 13:15:44'),
+('197408112002122008', 'S-2', 'Pengelola Sumberdaya Pembangunan', '2010', 'UNSRAT Manado', NULL, '2026-04-08 11:19:22', '2026-04-08 13:15:44'),
+('197510242000031002', 'S-1', 'MIPA Ilmu Komputer', '2008', 'UNIKA De La Sale Manado', NULL, '2026-04-08 11:19:22', '2026-04-08 13:15:44'),
+('197606222023212006', 'S-1', 'Manajemen Informatika', '2002', 'STMIK Manado', NULL, '2026-04-08 11:19:22', '2026-04-08 13:15:44'),
+('197704162010012004', 'S-1', 'Ekonomi Manajemen', '1999', 'STIE Budi Utomo Manado', NULL, '2026-04-08 11:19:22', '2026-04-08 13:15:44'),
+('197901102009022004', 'S-1', 'Sastra Inggris', '2005', 'UNSRAT Manado', NULL, '2026-04-08 11:19:22', '2026-04-08 13:15:44'),
+('198108122011022001', 'S-1', 'Ilmu Komputer', '2005', 'UKRIM Jogjakarta', NULL, '2026-04-08 11:19:22', '2026-04-08 13:15:44'),
+('198205072006042022', 'S-2', NULL, NULL, NULL, NULL, '2026-04-08 11:19:22', '2026-04-08 13:15:44'),
+('198308242010012006', 'D-1', 'Pemerintahan', '2004', 'UNSRAT Manado', NULL, '2026-04-08 11:19:22', '2026-04-08 13:15:44'),
+('198406112010012005', 'S-1', 'Sastra Inggris', '2008', 'UNIMA Tondano', NULL, '2026-04-08 11:19:22', '2026-04-08 13:15:44'),
+('198410022010012002', 'S-1', 'Ilmu Hukum', '2006', 'UNSRAT Manado', NULL, '2026-04-08 11:19:22', '2026-04-08 13:15:44'),
+('198504142023211024', 'S-1', 'Ekonomi Manajemen', '2010', 'STIE Budi Utomo Manado', NULL, '2026-04-08 11:19:22', '2026-04-08 13:15:44'),
+('198609272019031007', 'S-1', 'Ilmu Hukum', '2009', 'UNSRAT Manado', NULL, '2026-04-08 11:19:22', '2026-04-08 13:15:44'),
+('198809022019031009', 'S-1', 'Sistem Informasi', '2013', 'UKSW Salatiga', NULL, '2026-04-08 11:19:22', '2026-04-08 13:15:44'),
+('198903052024212039', 'S-1', 'Akuntansi', '2011', 'UNSRAT Manado', NULL, '2026-04-08 11:19:22', '2026-04-08 13:15:44'),
+('198908162019032019', 'D-3', 'Manajemen', '2010', 'Politeknik Negeri Manado', NULL, '2026-04-08 11:19:22', '2026-04-08 13:15:44'),
+('199109152019032010', 'S-1', 'Manajemen', '2013', 'STIE Swadaya Manado', NULL, '2026-04-08 11:19:22', '2026-04-08 13:15:44'),
+('199206022019032011', 'S-1', 'Akuntansi', '2013', 'UNSRAT Manado', NULL, '2026-04-08 11:19:22', '2026-04-08 13:15:44'),
+('199305062019032013', 'S-2', 'Akuntansi', '2017', 'UNSRAT Manado', NULL, '2026-04-08 11:19:22', '2026-04-08 13:15:44'),
+('199409132022032010', 'S-1', 'Ekonomi Manajemen', '2017', 'UNKLAB', NULL, '2026-04-08 11:19:22', '2026-04-08 13:15:44'),
+('199610072024212042', 'S-1', 'Manajemen', '2018', 'UNSRAT Manado', NULL, '2026-04-08 11:19:22', '2026-04-08 13:15:44'),
+('200308052025102001', 'D-4', 'Teknologi Rekayasa Informasi Pemerintahan', '2025', 'IPDN', NULL, '2026-04-08 11:19:22', '2026-04-08 13:15:44');
 
-('REFLI R. H. AROR, SE', 'TOMOHON', '1975-10-24', '19751024 200003 1 002', 'IIa', '2000-03-01', 'Penata Tkt I / IIId', 'L', 'Kawin', 'Kristen', 'S-1', 'MIPA Ilmu Komputer', 2008, 'UNIKA De La Sale Manado', 'Penata Perizinan Ahli Muda', NULL, 'PIM IV', 'DPMPTSPD', 'Kel. Kumelembuai Kec. Tomohon Timur', '085388845544'),
+-- --------------------------------------------------------
 
-('JAMES D. ROMPAS, ST', 'KAWANGKOAN', '1971-06-11', '19710611 200604 1 002', 'IIa', '2006-04-01', 'Penata Tkt I / IIId', 'L', 'Kawin', 'Kristen', 'S-1', 'Teknik Industri', 2009, 'ITM Tomohon', 'Penata Perizinan Ahli Muda', NULL, 'Pra Jabatan', 'DPMPTSPD', 'Kelurahan Wailan, Kec. Tomohon Utara', '082192686981'),
+--
+-- Table structure for table `pegawai_pribadi`
+--
 
-('IVANA S. O. RUMAYAR, SS.', 'Palu', '1979-01-10', '19790110 200902 2 004', 'IIIa', '2009-02-01', 'Penata Tkt I / IIId', 'P', 'Kawin', 'Kristen', 'S-1', 'Sastra Inggris', 2005, 'UNSRAT Manado', 'Analis Kebijakan Ahli Muda', NULL, 'PIM IV', 'DPMPTSPD', 'Kel. Pinaras Lingkungan VIII Kec. Tomohon Selatan', '082334348791'),
+CREATE TABLE `pegawai_pribadi` (
+  `nip` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `tempat_lahir` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `tanggal_lahir` date DEFAULT NULL,
+  `status_kawin` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `agama` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `alamat` text COLLATE utf8mb4_general_ci,
+  `no_telp` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `keterangan` text COLLATE utf8mb4_general_ci,
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-('VINCENTIA A. MUMPEL, SS', 'TATAARAN', '1984-06-11', '19840611 201001 2 005', 'IIIa', '2010-01-01', 'Penata Tkt I / IIId', 'P', 'Kawin', 'Katolik', 'S-1', 'Sastra Inggris', 2008, 'UNIMA Tondano', 'Penata Perizinan Ahli Muda', NULL, 'Pra Jabatan', 'DPMPTSPD', 'Kel. Talete Satu Lingkungan III, Kec. Tomohon Tengah', '082190452250'),
+--
+-- Dumping data for table `pegawai_pribadi`
+--
 
-('PRICILIA O. LANTANG, SH', 'TOMOHON', '1984-10-02', '19841002 201001 2 002', 'IIIa', '2010-01-01', 'Penata Tkt I / IIId', 'P', 'Kawin', 'Kristen', 'S-1', 'Ilmu Hukum', 2006, 'UNSRAT Manado', 'Penelaah Teknis Kebijakan', NULL, 'Pra Jabatan', 'DPMPTSPD', 'Kel. Kakaskasen Tiga Lingkungan V, Kec. Tomohon Utara', '082217400646'),
+INSERT INTO `pegawai_pribadi` (`nip`, `tempat_lahir`, `tanggal_lahir`, `status_kawin`, `agama`, `alamat`, `no_telp`, `keterangan`, `created_at`, `updated_at`) VALUES
+('196708271994032006', 'KAKAS', '1967-08-27', 'Kawin', 'Kristen', 'Kel. Kakaskasen III Kec. Tomohon Utara', '085256487915', NULL, '2026-04-08 11:19:22', '2026-04-08 13:15:44'),
+('196912212006042007', 'TOMOHON', '1969-12-21', 'Kawin', 'Kristen', 'Kel. Kakaskasen Dua Kec. Tomohon Utara', '082191460059', NULL, '2026-04-08 11:19:22', '2026-04-08 13:15:44'),
+('197106112006041002', 'KAWANGKOAN', '1971-06-11', 'Kawin', 'Kristen', 'Kelurahan Wailan, Kec. Tomohon Utara', '082192686981', NULL, '2026-04-08 11:19:22', '2026-04-08 13:15:44'),
+('197109192003122005', 'TOMOHON', '1971-09-19', 'Kawin', 'Kristen', 'Kel. Tinoor', NULL, NULL, '2026-04-08 11:19:22', '2026-04-08 13:15:44'),
+('197408112002122008', 'TOMOHON', '1974-08-11', 'Kawin', 'Kristen', 'Kel. Lansot Kec. Tomohon Selatan', '081340009575', NULL, '2026-04-08 11:19:22', '2026-04-08 13:15:44'),
+('197510242000031002', 'TOMOHON', '1975-10-24', 'Kawin', 'Kristen', 'Kel. Kumelembuai Kec. Tomohon Timur', '085388845544', NULL, '2026-04-08 11:19:22', '2026-04-08 13:15:44'),
+('197606222023212006', 'WOLOAN', '1976-06-22', 'Belum Kawin', 'Kristen', NULL, NULL, NULL, '2026-04-08 11:19:22', '2026-04-08 13:15:44'),
+('197704162010012004', 'TOMOHON', '1977-04-16', 'Kawin', 'Kristen', 'Kel. Kakaskasen Lingkungan VII, Kec. Tomohon Utara', '081354726433', NULL, '2026-04-08 11:19:22', '2026-04-08 13:15:44'),
+('197901102009022004', 'Palu', '1979-01-10', 'Kawin', 'Kristen', 'Kel. Pinaras Lingkungan VIII Kec. Tomohon Selatan', '082334348791', NULL, '2026-04-08 11:19:22', '2026-04-08 13:15:44'),
+('198108122011022001', 'TOMPASO BARU', '1981-08-12', 'Kawin', 'Kristen', 'Maumbi Jaga II Kec. Eris Kab. Minahasa', '085240791980', NULL, '2026-04-08 11:19:22', '2026-04-08 13:15:44'),
+('198205072006042022', 'TOMOHON', '1982-05-07', 'Kawin', 'Kristen', 'Kel. Paslaten Dua, Kec. Tomohon Timur', '085396323503', NULL, '2026-04-08 11:19:22', '2026-04-08 13:15:44'),
+('198308242010012006', 'TOMOHON', '1983-08-24', 'Kawin', 'Kristen', 'Kel. Kinilow Lingkungan III, Kec. Tomohon Utara', '085256597959', NULL, '2026-04-08 11:19:22', '2026-04-08 13:15:44'),
+('198406112010012005', 'TATAARAN', '1984-06-11', 'Kawin', 'Katolik', 'Kel. Talete Satu Lingkungan III, Kec. Tomohon Tengah', '082190452250', NULL, '2026-04-08 11:19:22', '2026-04-08 13:15:44'),
+('198410022010012002', 'TOMOHON', '1984-10-02', 'Kawin', 'Kristen', 'Kel. Kakaskasen Tiga Lingkungan V, Kec. Tomohon Utara', '082217400646', NULL, '2026-04-08 11:19:22', '2026-04-08 13:15:44'),
+('198504142023211024', 'TOMOHON', '1985-04-14', 'Kawin', 'Kristen', 'Kel. Kakaskasen Satu Lingkungan IV, Kec. Tomohon Utara', '085256780477', NULL, '2026-04-08 11:19:22', '2026-04-08 13:15:44'),
+('198609272019031007', 'LHOKSEUMAWE', '1986-09-27', 'Kawin', 'Kristen', 'Desa Kauditan Dua Kec. Kauditan Kab. Minahasa Utara', '081340651779', NULL, '2026-04-08 11:19:22', '2026-04-08 13:15:44'),
+('198809022019031009', 'JAKARTA', '1988-09-02', 'Kawin', 'Kristen', 'Kel. Tikala Kec. Wenang Manado', '082237766987', NULL, '2026-04-08 11:19:22', '2026-04-08 13:15:44'),
+('198903052024212039', 'TOMOHON', '1989-03-05', 'Kawin', 'Kristen', 'Kel. Lansot Lingkungan I, Kec. Tomohon Selatan', '082195554167', NULL, '2026-04-08 11:19:22', '2026-04-08 13:15:44'),
+('198908162019032019', 'MANADO', '1989-08-16', 'Kawin', 'Kristen', 'Kel. Dendengan Dalam Lingkungan V, Manado', '08114340462', NULL, '2026-04-08 11:19:22', '2026-04-08 13:15:44'),
+('199109152019032010', 'TOMOHON', '1991-09-15', 'Kawin', 'Kristen', 'Kel. Walian Lingkungan III, Kec. Tomohon Selatan', '085325003080', NULL, '2026-04-08 11:19:22', '2026-04-08 13:15:44'),
+('199206022019032011', 'KAYUUWI', '1992-06-02', 'Kawin', 'Kristen', 'Desa Kayuuwi Satu, Kec. Kawangkoan Barat, Minahasa', '085240750408', NULL, '2026-04-08 11:19:22', '2026-04-08 13:15:44'),
+('199305062019032013', 'TOMOHON', '1993-05-06', 'Kawin', 'Kristen', 'Kel. Wailan Lingkungan VII, Kec. Tomohon Utara', '085298829707', NULL, '2026-04-08 11:19:22', '2026-04-08 13:15:44'),
+('199409132022032010', 'TOMOHON', '1994-09-13', 'Belum Kawin', 'Kristen', 'Kel. Uluindano Lingkungan VI, Kec. Tomohon Selatan', '081248623581', NULL, '2026-04-08 11:19:22', '2026-04-08 13:15:44'),
+('199610072024212042', 'TOMOHON', '1996-10-07', 'Kawin', 'Kristen', 'Kel. Kakaskasen Satu Lingkungan VIII, Kec. Tomohon Utara', '0882019296141', NULL, '2026-04-08 11:19:22', '2026-04-08 13:15:44'),
+('200308052025102001', 'TOMOHON', '2003-08-05', 'Belum Kawin', 'Kristen', 'Kel. Walian Lingk. V Kec. Tomohon Selatan', '085756781525', NULL, '2026-04-08 11:19:22', '2026-04-08 13:15:44');
 
-('ARNOLD Y. P. KARUNDENG, S.SI', 'JAKARTA', '1988-09-02', '19880902 201903 1 009', 'IIIa', '2019-03-01', 'Penata Muda Tkt I / IIIb', 'L', 'Kawin', 'Kristen', 'S-1', 'Sistem Informasi', 2013, 'UKSW Salatiga', 'Penelaah Teknis Kebijakan', NULL, 'Latsar CPNS', 'DPMPTSPD', 'Kel. Tikala Kec. Wenang Manado', '082237766987'),
+-- --------------------------------------------------------
 
-('SINTYA CLARA ASSA, SE.', 'KAYUUWI', '1992-06-02', '19920602 201903 2 011', 'IIIa', '2019-03-01', 'Penata Muda Tkt I / IIIb', 'P', 'Kawin', 'Kristen', 'S-1', 'Akuntansi', 2013, 'UNSRAT Manado', 'Penelaah Teknis Kebijakan', NULL, 'Latsar CPNS', 'DPMPTSPD', 'Desa Kayuuwi Satu, Kec. Kawangkoan Barat, Minahasa', '085240750408'),
+--
+-- Table structure for table `users`
+--
 
-('DANIEL TOAR SAUT WAGYU, SH', 'LHOKSEUMAWE', '1986-09-27', '19860927 201903 1 007', 'IIIa', '2019-03-01', 'Penata Muda Tkt I / IIIb', 'L', 'Kawin', 'Kristen', 'S-1', 'Ilmu Hukum', 2009, 'UNSRAT Manado', 'Penelaah Teknis Kebijakan', NULL, 'Latsar CPNS', 'DPMPTSPD', 'Desa Kauditan Dua Kec. Kauditan Kab. Minahasa Utara', '081340651779'),
+CREATE TABLE `users` (
+  `id` int NOT NULL,
+  `username` varchar(100) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `email` varchar(150) DEFAULT NULL,
+  `role` enum('admin','petugas','viewer') NOT NULL DEFAULT 'petugas',
+  `nama_lengkap` varchar(200) DEFAULT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT '1',
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-('SILVANA ELITA SUMENDAP, SE', 'TOMOHON', '1991-09-15', '19910915 201903 2 010', 'IIc', '2019-03-01', 'Penata Muda / IIIa', 'P', 'Kawin', 'Kristen', 'S-1', 'Manajemen', 2013, 'STIE Swadaya Manado', 'Penelaah Teknis Kebijakan', NULL, 'Latsar CPNS', 'DPMPTSPD', 'Kel. Walian Lingkungan III, Kec. Tomohon Selatan', '085325003080'),
+--
+-- Dumping data for table `users`
+--
 
-('GLADYS SULANGI, A.Md', 'MANADO', '1989-08-16', '19890816 201903 2 019', 'IIc', '2019-03-01', 'Pengatur Tkt I / IId', 'P', 'Kawin', 'Kristen', 'D-3', 'Manajemen', 2010, 'Politeknik Negeri Manado', 'Penelaah Teknis Kebijakan', NULL, 'Latsar CPNS', 'DPMPTSPD', 'Kel. Dendengan Dalam Lingkungan V, Manado', '08114340462'),
+INSERT INTO `users` (`id`, `username`, `password`, `email`, `role`, `nama_lengkap`, `is_active`, `created_at`, `updated_at`) VALUES
+(1, 'admin', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin@dinas.go.id', 'admin', 'Administrator', 1, '2026-04-01 13:53:02', '2026-04-01 13:53:02'),
+(2, 'petugas', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'petugas@dinas.go.id', 'petugas', 'Petugas Kepegawaian', 1, '2026-04-01 13:53:02', '2026-04-01 13:53:02');
 
-('MELISA MAMESAH, SE., MSA', 'TOMOHON', '1993-05-06', '19930506 201903 2 013', 'IIIa', '2019-03-01', 'Penata Muda / IIIa', 'P', 'Kawin', 'Kristen', 'S-2', 'Akuntansi', 2017, 'UNSRAT Manado', 'Penelaah Teknis Kebijakan (Bendahara)', NULL, 'Latsar CPNS', 'DPMPTSPD', 'Kel. Wailan Lingkungan VII, Kec. Tomohon Utara', '085298829707'),
+--
+-- Indexes for dumped tables
+--
 
-('LUCKY YOSIN BABY RAU, SM', 'TOMOHON', '1994-09-13', '19940913 202203 2 010', 'IIIa', '2022-03-01', 'Penata Muda / IIIa', 'P', 'Belum Kawin', 'Kristen', 'S-1', 'Ekonomi Manajemen', 2017, 'UNKLAB', 'Penelaah Teknis Kebijakan', NULL, 'Latsar CPNS', 'DPMPTSPD', 'Kel. Uluindano Lingkungan VI, Kec. Tomohon Selatan', '081248623581'),
+--
+-- Indexes for table `pegawai`
+--
+ALTER TABLE `pegawai`
+  ADD PRIMARY KEY (`nip`);
 
-('ANSYE CHRISTINE ENGGELINA RANDANG', 'TOMOHON', '1983-08-24', '19830824 201001 2 006', 'IIa', '2010-01-01', 'Penata/ IIa', 'P', 'Kawin', 'Kristen', 'D-1', 'Pemerintahan', 2004, 'UNSRAT Manado', 'Pengadministrasi Perkantoran', NULL, 'Pra Jabatan', 'DPMPTSPD', 'Kel. Kinilow Lingkungan III, Kec. Tomohon Utara', '085256597959'),
+--
+-- Indexes for table `pegawai_drh`
+--
+ALTER TABLE `pegawai_drh`
+  ADD PRIMARY KEY (`nip`);
 
-('KRISTINA CARLEN PANGEMANAN, S.Tr.IP', 'TOMOHON', '2003-08-05', '20030805 202510 2 001', 'IIIa', '2025-10-01', 'Penata Muda / IIIa', 'P', 'Belum Kawin', 'Kristen', 'D-4', 'Teknologi Rekayasa Informasi Pemerintahan', 2025, 'IPDN', 'Penata Perizinan Ahli Pertama', NULL, NULL, 'DPMPTSPD', 'Kel. Walian Lingk. V Kec. Tomohon Selatan', '085756781525'),
+--
+-- Indexes for table `pegawai_pribadi`
+--
+ALTER TABLE `pegawai_pribadi`
+  ADD PRIMARY KEY (`nip`);
 
-('NIKITA APRIANTO PALIT, SE', 'TOMOHON', '1985-04-14', '19850414 202321 1 024', 'IX', '2023-10-01', '-', 'P', 'Kawin', 'Kristen', 'S-1', 'Ekonomi Manajemen', 2010, 'STIE Budi Utomo Manado', 'Analis Kebijakan Ahli Pertama', NULL, NULL, 'DPMPTSPD', 'Kel. Kakaskasen Satu Lingkungan IV, Kec. Tomohon Utara', '085256780477'),
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `uq_username` (`username`);
 
-('JUNITA N. PANTOW, S.Kom', 'WOLOAN', '1976-06-22', '19760622 202321 2 006', 'IX', '2023-10-01', '-', 'P', 'Belum Kawin', 'Kristen', 'S-1', 'Manajemen Informatika', 2002, 'STMIK Manado', 'Pranata Komputer Ahli Pertama', NULL, NULL, 'DPMPTSPD', NULL, NULL),
+--
+-- AUTO_INCREMENT for dumped tables
+--
 
-('NIESYELA M. RONDONUWU, SE', 'TOMOHON', '1989-03-05', '19890305 202421 2 039', 'IX', '2024-03-01', '-', 'P', 'Kawin', 'Kristen', 'S-1', 'Akuntansi', 2011, 'UNSRAT Manado', 'Analis Kebijakan Ahli Pertama', NULL, NULL, 'DPMPTSPD', 'Kel. Lansot Lingkungan I, Kec. Tomohon Selatan', '082195554167'),
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+COMMIT;
 
-('OKTAVIA CLAUDIA PUSUNG, SE', 'TOMOHON', '1996-10-07', '19961007 202421 2 042', 'IX', '2024-03-01', '-', 'P', 'Kawin', 'Kristen', 'S-1', 'Manajemen', 2018, 'UNSRAT Manado', 'PERENCANA AHLI PERTAMA', NULL, NULL, 'DPMPTSP', 'Kel. Kakaskasen Satu Lingkungan VIII, Kec. Tomohon Utara', '0882019296141');
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

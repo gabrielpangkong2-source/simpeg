@@ -14,7 +14,7 @@
         <h3><i class="fas fa-user-edit mr-2"></i>Form Edit Pegawai</h3>
     </div>
     <div class="card-body">
-        <form action="<?= site_url('pegawai/update/'.$p->id) ?>" method="POST">
+        <form action="<?= site_url('pegawai/update/'.$p->nip) ?>" method="POST">
 
             <!-- Data Pribadi -->
             <div class="mb-4">

@@ -96,7 +96,9 @@
                             <td class="text-center"><?= $no++ ?></td>
                             <td>
                                 <strong><?= $p->nama ?></strong>
-                                <br><small class="text-muted"><?= $p->tempat_lahir ?>, <?= date('d/m/Y', strtotime($p->tanggal_lahir)) ?></small>
+                                <?php if ($p->tempat_lahir || $p->tanggal_lahir): ?>
+                                <br><small class="text-muted"><?= $p->tempat_lahir ?>, <?= $p->tanggal_lahir ? date('d/m/Y', strtotime($p->tanggal_lahir)) : '-' ?></small>
+                                <?php endif; ?>
                             </td>
                             <td><code><?= $p->nip ?></code></td>
                             <td><?= $p->pangkat_terakhir ?></td>
@@ -108,13 +110,13 @@
                             </td>
                             <td><?= $p->tingkat_pendidikan ?></td>
                             <td class="text-center">
-                                <a href="<?= site_url('pegawai/detail/' . $p->id) ?>" class="btn btn-info btn-sm" title="Detail">
+                                <a href="<?= site_url('pegawai/detail/' . $p->nip) ?>" class="btn btn-info btn-sm" title="Detail">
                                     <i class="fas fa-eye"></i>
                                 </a>
-                                <a href="<?= site_url('pegawai/edit/' . $p->id) ?>" class="btn btn-warning btn-sm" title="Edit">
+                                <a href="<?= site_url('pegawai/edit/' . $p->nip) ?>" class="btn btn-warning btn-sm" title="Edit">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                <button onclick="confirmDelete('<?= site_url('pegawai/hapus/' . $p->id) ?>', '<?= addslashes($p->nama) ?>')" class="btn btn-danger btn-sm" title="Hapus">
+                                <button onclick="confirmDelete('<?= site_url('pegawai/hapus/' . $p->nip) ?>', '<?= addslashes($p->nama) ?>')" class="btn btn-danger btn-sm" title="Hapus">
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </td>
