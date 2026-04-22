@@ -177,6 +177,26 @@ INSERT INTO `pegawai_pribadi` (`nip`, `tempat_lahir`, `tanggal_lahir`, `status_k
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `pengajuan_surat_sakit`
+--
+
+CREATE TABLE `pengajuan_surat_sakit` (
+  `id` int NOT NULL,
+  `nip` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
+  `jenis` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
+  `tanggal_surat` date NOT NULL,
+  `tanggal_izin` date NOT NULL,
+  `alasan` text COLLATE utf8mb4_general_ci NOT NULL,
+  `penandatangan` varchar(200) COLLATE utf8mb4_general_ci NOT NULL,
+  `nomor_surat` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `nomor_surat_at` datetime DEFAULT NULL,
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -211,6 +231,14 @@ ALTER TABLE `pegawai`
   ADD PRIMARY KEY (`nip`);
 
 --
+-- Indexes for table `pengajuan_surat_sakit`
+--
+ALTER TABLE `pengajuan_surat_sakit`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idx_pengajuan_surat_sakit_nip` (`nip`),
+  ADD KEY `idx_pengajuan_surat_sakit_nomor_surat` (`nomor_surat`);
+
+--
 -- Indexes for table `pegawai_drh`
 --
 ALTER TABLE `pegawai_drh`
@@ -238,6 +266,12 @@ ALTER TABLE `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `pengajuan_surat_sakit`
+--
+ALTER TABLE `pengajuan_surat_sakit`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -71,6 +71,18 @@
             position: 'top-end'
         });
     <?php endif; ?>
+
+    <?php if ($this->session->flashdata('error')): ?>
+        Swal.fire({
+            icon: 'error',
+            title: 'Gagal!',
+            text: '<?= $this->session->flashdata('error') ?>',
+            showConfirmButton: false,
+            timer: 2500,
+            toast: true,
+            position: 'top-end'
+        });
+    <?php endif; ?>
 </script>
 
 </body>

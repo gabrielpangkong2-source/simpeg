@@ -7,6 +7,11 @@ class Pegawai extends CI_Controller {
     {
         parent::__construct();
         $this->load->model('Pegawai_model');
+
+        // Hanya admin/petugas yang boleh akses
+        if (!$this->session->userdata('logged_in') || $this->session->userdata('role') === 'pegawai') {
+            redirect('auth');
+        }
     }
 
     public function index()

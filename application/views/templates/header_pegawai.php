@@ -12,8 +12,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <!-- Bootstrap 4 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-    <!-- DataTables -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap4.min.css">
     <!-- SweetAlert2 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
@@ -111,6 +109,30 @@
             width: 20px;
             text-align: center;
             font-size: 15px;
+        }
+
+        .sidebar .nav-menu li a .menu-caret {
+            width: auto;
+            margin-left: auto;
+            font-size: 12px;
+            transition: transform 0.2s;
+        }
+
+        .sidebar .nav-dropdown-toggle[aria-expanded="true"] .menu-caret,
+        .sidebar .nav-dropdown-toggle.active .menu-caret {
+            transform: rotate(180deg);
+        }
+
+        .sidebar .nav-submenu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            background: rgba(0, 0, 0, 0.08);
+        }
+
+        .sidebar .nav-submenu li a {
+            padding-left: 52px;
+            font-size: 13px;
         }
 
         /* Navbar */
@@ -242,10 +264,6 @@
             color: #4a5568;
         }
 
-        .table tbody tr:hover {
-            background-color: #f7fafc;
-        }
-
         /* Buttons */
         .btn-primary {
             background-color: #3182ce;
@@ -255,18 +273,6 @@
         .btn-primary:hover {
             background-color: #2c5282;
             border-color: #2c5282;
-        }
-
-        .btn-info {
-            background-color: #63b3ed;
-            border-color: #63b3ed;
-            color: #fff;
-        }
-
-        .btn-info:hover {
-            background-color: #4299e1;
-            border-color: #4299e1;
-            color: #fff;
         }
 
         /* Badge */
@@ -329,6 +335,8 @@
 
 <body>
 
+    <?php $is_pengajuan_menu = ($this->uri->segment(1) === 'pengajuan_surat'); ?>
+
     <!-- Sidebar -->
     <aside class="sidebar" id="sidebar">
         <div class="brand">
@@ -344,16 +352,34 @@
         <div class="nav-section">Menu Utama</div>
         <ul class="nav-menu">
             <li>
-                <a href="<?= site_url('pegawai') ?>" class="<?= ($this->uri->segment(1) == 'pegawai' || $this->uri->segment(1) == '') ? 'active' : '' ?>">
-                    <i class="fas fa-users"></i>
-                    <span>Data Pegawai</span>
+                <a href="<?= site_url('dashboard') ?>" class="<?= ($this->uri->segment(1) == 'dashboard' && $this->uri->segment(2) == '') ? 'active' : '' ?>">
+                    <i class="fas fa-user"></i>
+                    <span>Data Diri</span>
                 </a>
             </li>
             <li>
-                <a href="<?= site_url('surat') ?>" class="<?= ($this->uri->segment(1) == 'surat') ? 'active' : '' ?>">
-                    <i class="fas fa-envelope-open-text"></i>
-                    <span>Surat</span>
+                <a
+                    class="nav-dropdown-toggle <?= $is_pengajuan_menu ? 'active' : '' ?>"
+                    data-toggle="collapse"
+                    href="#menuPengajuanSurat"
+                    role="button"
+                    aria-expanded="<?= $is_pengajuan_menu ? 'true' : 'false' ?>"
+                    aria-controls="menuPengajuanSurat"
+                >
+                    <i class="fas fa-file-alt"></i>
+                    <span>Pengajuan Surat</span>
+                    <i class="fas fa-chevron-down menu-caret"></i>
                 </a>
+                <div class="collapse <?= $is_pengajuan_menu ? 'show' : '' ?>" id="menuPengajuanSurat">
+                    <ul class="nav-submenu">
+                        <li>
+                            <a href="<?= site_url('pengajuan_surat/surat_keterangan_sakit') ?>" class="<?= ($this->uri->segment(1) == 'pengajuan_surat' && $this->uri->segment(2) == 'surat_keterangan_sakit') ? 'active' : '' ?>">
+                                <i class="fas fa-notes-medical"></i>
+                                <span>Surat Keterangan Sakit</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </li>
         </ul>
 
@@ -378,8 +404,8 @@
         </div>
         <div class="navbar-right">
             <div class="user-info">
-                <span><?= $this->session->userdata('nama') ?: 'Petugas' ?></span>
-                <div class="user-avatar"><?= strtoupper(substr($this->session->userdata('nama') ?: 'Petugas', 0, 1)) ?></div>
+                <span><?= $this->session->userdata('nama') ?></span>
+                <div class="user-avatar"><?= strtoupper(substr($this->session->userdata('nama'), 0, 1)) ?></div>
             </div>
         </div>
     </nav>
