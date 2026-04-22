@@ -2,31 +2,24 @@
 <nav class="breadcrumb-wrapper">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="<?= site_url('pegawai') ?>">Home</a></li>
-        <li class="breadcrumb-item"><a href="<?= site_url('pegawai') ?>">Data Pegawai</a></li>
-        <li class="breadcrumb-item active">Detail Pegawai</li>
+        <li class="breadcrumb-item"><a href="<?= site_url('persetujuan_pegawai') ?>">Persetujuan Data Pegawai</a></li>
+        <li class="breadcrumb-item active">Detail Pengajuan Pegawai</li>
     </ol>
 </nav>
 
 <?php $p = $pegawai; ?>
-<?php $is_kasubag = ($this->session->userdata('role') === 'kasubag'); ?>
 
 <div class="card">
     <div class="card-header d-flex justify-content-between align-items-center">
-        <h3><i class="fas fa-user mr-2"></i>Detail Pegawai</h3>
+        <h3><i class="fas fa-user mr-2"></i>Detail Pengajuan Pegawai</h3>
         <div>
-            <?php if (!$is_kasubag): ?>
-            <a href="<?= site_url('pegawai/edit/'.$p->nip) ?>" class="btn btn-warning btn-sm">
-                <i class="fas fa-edit mr-1"></i> Edit
-            </a>
-            <?php endif; ?>
-            <a href="<?= site_url('pegawai') ?>" class="btn btn-secondary btn-sm">
+            <a href="<?= site_url('persetujuan_pegawai') ?>" class="btn btn-secondary btn-sm">
                 <i class="fas fa-arrow-left mr-1"></i> Kembali
             </a>
         </div>
     </div>
     <div class="card-body">
 
-        <!-- Header Info -->
         <div class="d-flex align-items-center mb-4 p-3" style="background:#f7fafc;border-radius:8px;border-left:4px solid #3182ce">
             <div style="width:60px;height:60px;border-radius:50%;background:#3182ce;color:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;margin-right:16px">
                 <?= strtoupper(substr($p->nama, 0, 1)) ?>
@@ -40,7 +33,6 @@
             </div>
         </div>
 
-        <!-- Data Pribadi -->
         <div class="mb-3">
             <h5 style="color:#3182ce;font-weight:700;border-bottom:2px solid #ebf4ff;padding-bottom:8px">
                 <i class="fas fa-user mr-2"></i>Data Pribadi
@@ -85,7 +77,6 @@
             </div>
         </div>
 
-        <!-- Data Kepegawaian -->
         <div class="mb-3">
             <h5 style="color:#3182ce;font-weight:700;border-bottom:2px solid #ebf4ff;padding-bottom:8px">
                 <i class="fas fa-id-card mr-2"></i>Data Kepegawaian
@@ -134,7 +125,6 @@
             </div>
         </div>
 
-        <!-- Data Pendidikan -->
         <div class="mb-3">
             <h5 style="color:#3182ce;font-weight:700;border-bottom:2px solid #ebf4ff;padding-bottom:8px">
                 <i class="fas fa-graduation-cap mr-2"></i>Data Pendidikan
@@ -167,7 +157,6 @@
             </div>
         </div>
 
-        <!-- Keterangan -->
         <?php if ($p->keterangan): ?>
         <div class="mb-3">
             <h5 style="color:#3182ce;font-weight:700;border-bottom:2px solid #ebf4ff;padding-bottom:8px">

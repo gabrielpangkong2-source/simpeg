@@ -127,6 +127,42 @@ INSERT INTO `pegawai_drh` (`nip`, `tingkat_pendidikan`, `jurusan`, `tahun_lulus`
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `pegawai_pending`
+--
+
+CREATE TABLE `pegawai_pending` (
+  `id` int NOT NULL,
+  `nip` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
+  `nama` varchar(200) COLLATE utf8mb4_general_ci NOT NULL,
+  `gol_ruang_cpns` varchar(10) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `tmt_cpns` date DEFAULT NULL,
+  `pangkat_terakhir` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `jenis_kelamin` enum('L','P') COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'L',
+  `jabatan` varchar(200) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `eselon` varchar(10) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `diklat_penjenjangan` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `instansi_pembayar` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `keterangan` text COLLATE utf8mb4_general_ci,
+  `tempat_lahir` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `tanggal_lahir` date DEFAULT NULL,
+  `status_kawin` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `agama` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `alamat` text COLLATE utf8mb4_general_ci,
+  `no_telp` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `tingkat_pendidikan` varchar(10) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `jurusan` varchar(150) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `tahun_lulus` year DEFAULT NULL,
+  `alumni` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `status` enum('pending','approved') COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'pending',
+  `approved_by` varchar(30) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `approved_at` datetime DEFAULT NULL,
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `pegawai_pribadi`
 --
 
@@ -220,6 +256,16 @@ INSERT INTO `users` (`id`, `username`, `password`, `email`, `role`, `nama_lengka
 (1, 'admin', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin@dinas.go.id', 'admin', 'Administrator', 1, '2026-04-01 13:53:02', '2026-04-01 13:53:02'),
 (2, 'petugas', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'petugas@dinas.go.id', 'petugas', 'Petugas Kepegawaian', 1, '2026-04-01 13:53:02', '2026-04-01 13:53:02');
 
+UPDATE `pegawai`
+SET `role` = 'pegawai',
+    `password` = '$2y$12$b/uTkL1j8DMMs1gLNou.ZOeO8mwQaKyQ/ZCYRfIV3DxYhCq5sfne6'
+WHERE `role` = ''
+  AND `password` = '';
+
+UPDATE `pegawai`
+SET `role` = 'kasubag'
+WHERE `nip` = '197704162010012004';
+
 --
 -- Indexes for dumped tables
 --
@@ -229,6 +275,14 @@ INSERT INTO `users` (`id`, `username`, `password`, `email`, `role`, `nama_lengka
 --
 ALTER TABLE `pegawai`
   ADD PRIMARY KEY (`nip`);
+
+--
+-- Indexes for table `pegawai_pending`
+--
+ALTER TABLE `pegawai_pending`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `uq_pegawai_pending_nip` (`nip`),
+  ADD KEY `idx_pegawai_pending_status` (`status`);
 
 --
 -- Indexes for table `pengajuan_surat_sakit`
@@ -266,6 +320,12 @@ ALTER TABLE `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `pegawai_pending`
+--
+ALTER TABLE `pegawai_pending`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `pengajuan_surat_sakit`

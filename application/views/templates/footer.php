@@ -59,6 +59,23 @@
         });
     }
 
+    function confirmApproval(formId, nama) {
+        Swal.fire({
+            title: 'Setujui Data?',
+            html: 'Setujui data pegawai <strong>' + nama + '</strong>?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#38a169',
+            cancelButtonColor: '#a0aec0',
+            confirmButtonText: 'Ya, Setujui!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById(formId).submit();
+            }
+        });
+    }
+
     // Flash message
     <?php if ($this->session->flashdata('success')): ?>
         Swal.fire({

@@ -8,7 +8,10 @@ class Surat extends CI_Controller {
         parent::__construct();
         $this->load->model('Pengajuan_surat_model');
 
-        if (!$this->session->userdata('logged_in') || $this->session->userdata('role') === 'pegawai') {
+        if (
+            !$this->session->userdata('logged_in') ||
+            in_array($this->session->userdata('role'), array('pegawai', 'kasubag'), TRUE)
+        ) {
             redirect('auth');
         }
     }

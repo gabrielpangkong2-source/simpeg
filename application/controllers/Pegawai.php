@@ -8,7 +8,7 @@ class Pegawai extends CI_Controller {
         parent::__construct();
         $this->load->model('Pegawai_model');
 
-        // Hanya admin/petugas yang boleh akses
+        // Hanya admin/petugas/kasubag yang boleh akses
         if (!$this->session->userdata('logged_in') || $this->session->userdata('role') === 'pegawai') {
             redirect('auth');
         }
@@ -26,6 +26,8 @@ class Pegawai extends CI_Controller {
 
     public function tambah()
     {
+        $this->guard_read_only_role();
+
         $data['title'] = 'Tambah Pegawai';
 
         $this->load->view('templates/header', $data);
@@ -35,9 +37,17 @@ class Pegawai extends CI_Controller {
 
     public function simpan()
     {
+        $this->guard_read_only_role();
+
         $nip = $this->input->post('nip', TRUE);
 
-        $pegawai = array(
+        if ($this->Pegawai_model->nip_exists($nip) || $this->Pegawai_model->pending_nip_exists($nip)) {
+            $this->session->set_flashdata('error', 'NIP sudah terdaftar atau masih menunggu persetujuan Kasubag.');
+            redirect('pegawai/tambah');
+            return;
+        }
+
+        $pending = array(
             'nip'                 => $nip,
             'nama'                => $this->input->post('nama', TRUE),
             'gol_ruang_cpns'      => $this->input->post('gol_ruang_cpns', TRUE),
@@ -49,35 +59,27 @@ class Pegawai extends CI_Controller {
             'diklat_penjenjangan' => $this->input->post('diklat_penjenjangan', TRUE),
             'instansi_pembayar'   => $this->input->post('instansi_pembayar', TRUE),
             'keterangan'          => $this->input->post('keterangan', TRUE),
-            'role'                => '',
-            'password'            => '',
-        );
-
-        $pribadi = array(
-            'nip'            => $nip,
             'tempat_lahir'   => $this->input->post('tempat_lahir', TRUE),
             'tanggal_lahir'  => $this->input->post('tanggal_lahir', TRUE) ?: NULL,
             'status_kawin'   => $this->input->post('status_kawin', TRUE),
             'agama'          => $this->input->post('agama', TRUE),
             'alamat'         => $this->input->post('alamat', TRUE),
             'no_telp'        => $this->input->post('no_telp', TRUE),
-        );
-
-        $drh = array(
-            'nip'                => $nip,
             'tingkat_pendidikan' => $this->input->post('tingkat_pendidikan', TRUE),
             'jurusan'            => $this->input->post('jurusan', TRUE),
             'tahun_lulus'        => $this->input->post('tahun_lulus', TRUE) ?: NULL,
             'alumni'             => $this->input->post('alumni', TRUE),
         );
 
-        $this->Pegawai_model->insert($pegawai, $pribadi, $drh);
-        $this->session->set_flashdata('success', 'Data pegawai berhasil ditambahkan!');
+        $this->Pegawai_model->insert_pending($pending);
+        $this->session->set_flashdata('success', 'Data pegawai berhasil diajukan dan menunggu persetujuan Kasubag.');
         redirect('pegawai');
     }
 
     public function edit($nip)
     {
+        $this->guard_read_only_role();
+
         $data['title'] = 'Edit Pegawai';
         $data['pegawai'] = $this->Pegawai_model->get_by_nip($nip);
 
@@ -92,6 +94,8 @@ class Pegawai extends CI_Controller {
 
     public function update($nip)
     {
+        $this->guard_read_only_role();
+
         $pegawai = array(
             'nama'                => $this->input->post('nama', TRUE),
             'gol_ruang_cpns'      => $this->input->post('gol_ruang_cpns', TRUE),
@@ -128,6 +132,8 @@ class Pegawai extends CI_Controller {
 
     public function hapus($nip)
     {
+        $this->guard_read_only_role();
+
         $pegawai = $this->Pegawai_model->get_by_nip($nip);
         if (empty($pegawai)) {
             show_404();
@@ -150,5 +156,14 @@ class Pegawai extends CI_Controller {
         $this->load->view('templates/header', $data);
         $this->load->view('pegawai/detail', $data);
         $this->load->view('templates/footer');
+    }
+
+    private function guard_read_only_role()
+    {
+        if ($this->session->userdata('role') === 'kasubag') {
+            $this->session->set_flashdata('error', 'Role Kasubag hanya dapat melihat data pegawai.');
+            redirect('pegawai');
+            exit;
+        }
     }
 }

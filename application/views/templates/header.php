@@ -329,6 +329,8 @@
 
 <body>
 
+    <?php $role = $this->session->userdata('role'); ?>
+
     <!-- Sidebar -->
     <aside class="sidebar" id="sidebar">
         <div class="brand">
@@ -346,15 +348,24 @@
             <li>
                 <a href="<?= site_url('pegawai') ?>" class="<?= ($this->uri->segment(1) == 'pegawai' || $this->uri->segment(1) == '') ? 'active' : '' ?>">
                     <i class="fas fa-users"></i>
-                    <span>Data Pegawai</span>
+                    <span><?= ($role === 'kasubag') ? 'Pegawai' : 'Data Pegawai' ?></span>
                 </a>
             </li>
+            <?php if ($role === 'kasubag'): ?>
+            <li>
+                <a href="<?= site_url('persetujuan_pegawai') ?>" class="<?= ($this->uri->segment(1) == 'persetujuan_pegawai') ? 'active' : '' ?>">
+                    <i class="fas fa-clipboard-check"></i>
+                    <span>Persetujuan Data Pegawai</span>
+                </a>
+            </li>
+            <?php else: ?>
             <li>
                 <a href="<?= site_url('surat') ?>" class="<?= ($this->uri->segment(1) == 'surat') ? 'active' : '' ?>">
                     <i class="fas fa-envelope-open-text"></i>
                     <span>Surat</span>
                 </a>
             </li>
+            <?php endif; ?>
         </ul>
 
         <div class="nav-section">Pengaturan</div>

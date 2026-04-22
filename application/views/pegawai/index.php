@@ -6,6 +6,8 @@
     </ol>
 </nav>
 
+<?php $is_kasubag = ($this->session->userdata('role') === 'kasubag'); ?>
+
 <!-- Info Cards -->
 <div class="row mb-4">
     <div class="col-lg-3 col-md-6 col-sm-6 mb-3">
@@ -70,9 +72,11 @@
 <div class="card">
     <div class="card-header d-flex justify-content-between align-items-center">
         <h3><i class="fas fa-table mr-2"></i>Daftar Pegawai</h3>
+        <?php if (!$is_kasubag): ?>
         <a href="<?= site_url('pegawai/tambah') ?>" class="btn btn-primary btn-sm">
             <i class="fas fa-plus mr-1"></i> Tambah Pegawai
         </a>
+        <?php endif; ?>
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -113,12 +117,14 @@
                                 <a href="<?= site_url('pegawai/detail/' . $p->nip) ?>" class="btn btn-info btn-sm" title="Detail">
                                     <i class="fas fa-eye"></i>
                                 </a>
+                                <?php if (!$is_kasubag): ?>
                                 <a href="<?= site_url('pegawai/edit/' . $p->nip) ?>" class="btn btn-warning btn-sm" title="Edit">
                                     <i class="fas fa-edit"></i>
                                 </a>
                                 <button onclick="confirmDelete('<?= site_url('pegawai/hapus/' . $p->nip) ?>', '<?= addslashes($p->nama) ?>')" class="btn btn-danger btn-sm" title="Hapus">
                                     <i class="fas fa-trash"></i>
                                 </button>
+                                <?php endif; ?>
                             </td>
                         </tr>
                     <?php endforeach; ?>

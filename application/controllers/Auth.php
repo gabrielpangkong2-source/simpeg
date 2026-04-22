@@ -85,6 +85,11 @@ class Auth extends CI_Controller {
             return;
         }
 
+        if ($role === 'kasubag') {
+            redirect('persetujuan_pegawai');
+            return;
+        }
+
         redirect('pegawai');
     }
 }
