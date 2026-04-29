@@ -1,0 +1,117 @@
+-- Safe schema export for repository use
+-- No real employee data or local credentials are included here.
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+CREATE TABLE `pegawai` (
+  `nama` varchar(200) COLLATE utf8mb4_general_ci NOT NULL,
+  `nip` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
+  `gol_ruang_cpns` varchar(10) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `tmt_cpns` date DEFAULT NULL,
+  `pangkat_terakhir` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `jenis_kelamin` enum('L','P') COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'L',
+  `jabatan` varchar(200) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `eselon` varchar(10) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `diklat_penjenjangan` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `instansi_pembayar` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `keterangan` text COLLATE utf8mb4_general_ci,
+  `role` varchar(256) COLLATE utf8mb4_general_ci NOT NULL,
+  `password` varchar(256) COLLATE utf8mb4_general_ci NOT NULL,
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`nip`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `pegawai_drh` (
+  `nip` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `tingkat_pendidikan` varchar(10) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `jurusan` varchar(150) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `tahun_lulus` year DEFAULT NULL,
+  `alumni` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `keterangan` text COLLATE utf8mb4_general_ci,
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`nip`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `pegawai_pending` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nip` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
+  `nama` varchar(200) COLLATE utf8mb4_general_ci NOT NULL,
+  `gol_ruang_cpns` varchar(10) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `tmt_cpns` date DEFAULT NULL,
+  `pangkat_terakhir` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `jenis_kelamin` enum('L','P') COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'L',
+  `jabatan` varchar(200) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `eselon` varchar(10) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `diklat_penjenjangan` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `instansi_pembayar` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `keterangan` text COLLATE utf8mb4_general_ci,
+  `tempat_lahir` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `tanggal_lahir` date DEFAULT NULL,
+  `status_kawin` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `agama` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `alamat` text COLLATE utf8mb4_general_ci,
+  `no_telp` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `tingkat_pendidikan` varchar(10) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `jurusan` varchar(150) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `tahun_lulus` year DEFAULT NULL,
+  `alumni` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `status` enum('pending','approved') COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'pending',
+  `approved_by` varchar(30) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `approved_at` datetime DEFAULT NULL,
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uq_pegawai_pending_nip` (`nip`),
+  KEY `idx_pegawai_pending_status` (`status`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `pegawai_pribadi` (
+  `nip` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `tempat_lahir` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `tanggal_lahir` date DEFAULT NULL,
+  `status_kawin` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `agama` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `alamat` text COLLATE utf8mb4_general_ci,
+  `no_telp` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `keterangan` text COLLATE utf8mb4_general_ci,
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`nip`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `pengajuan_surat_sakit` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nip` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
+  `jenis` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
+  `tanggal_surat` date NOT NULL,
+  `tanggal_izin` date NOT NULL,
+  `alasan` text COLLATE utf8mb4_general_ci NOT NULL,
+  `penandatangan` varchar(200) COLLATE utf8mb4_general_ci NOT NULL,
+  `nomor_surat` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `nomor_surat_at` datetime DEFAULT NULL,
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `idx_pengajuan_surat_sakit_nip` (`nip`),
+  KEY `idx_pengajuan_surat_sakit_nomor_surat` (`nomor_surat`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `users` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `username` varchar(100) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `email` varchar(150) DEFAULT NULL,
+  `role` enum('admin','petugas','viewer') NOT NULL DEFAULT 'petugas',
+  `nama_lengkap` varchar(200) DEFAULT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT '1',
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uq_username` (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+COMMIT;
